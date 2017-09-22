@@ -1,0 +1,1 @@
+!function($){"use strict";$(function(){$(".result").hover(function(){$(this).toggleClass("result_hover")})})}(jQuery);

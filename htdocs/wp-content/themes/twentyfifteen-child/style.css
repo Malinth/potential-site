@@ -1,0 +1,86 @@
+/*
+ Theme Name:   Twenty Fifteen Child
+ Theme URI:    http://example.com/twenty-fifteen-child/
+ Description:  Twenty Fifteen Child Theme
+ Author:       John Doe
+ Author URI:   http://example.com
+ Template:     twentyfifteen
+ Version:      1.0.0
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
+ Text Domain:  twenty-fifteen-child
+*/
+/*
+.site {
+    margin: 0 auto;
+    max-width: 1503px;
+}
+
+.site-main {
+    background: grey; 
+}
+*/
+@media screen and (min-width: 59.6875em){
+.sidebar {
+    float: left;
+    margin-right: -100%;
+    max-width: 410px;
+    position: fixed;
+    width: 29.4118%;
+	background: #fff;
+}
+}
+/*
+@media screen and (min-width: 59.6875em){
+.site-main {
+    padding: 3rem 3rem;
+}
+}
+
+@media screen and (min-width: 59.6875em){
+.hentry, .page-header, .page-content {
+    margin: 0 0;
+}
+}
+
+.hentry.has-post-thumbnail {
+    padding-top: 0;
+    width: 100%;
+}
+
+.post-thumbnail img {
+    display: block;
+    margin: 0 auto;
+    height: 100%;
+        width: 100%;
+    margin: 0rem;
+    }*/
+    
+input.footerbutton {
+	    background: #fff;
+	    color: #000;
+    }
+    
+ .result {
+     height: 72px;
+     width: 100%;
+     border: 1px solid #000;
+     width: 100%;
+}
+
+ .result p {
+  /* visibility: hidden;*/
+  text-align: center;
+}
+
+ .result_hover p {
+   visibility: visible;
+   text-align: center;
+}
+
+ .result_hover {
+     background-color: pink;
+     color: black;
+ }	
+ 

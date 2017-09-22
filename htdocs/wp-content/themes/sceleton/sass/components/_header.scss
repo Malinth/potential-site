@@ -1,0 +1,51 @@
+.header{
+	background:-webkit-linear-gradient(#000000 4.27%, #ffffff 100%);
+  /*  position: absolute;
+  z-index: 100;*/
+    top: 0;
+    width: 100%;
+    padding: 2rem 0;
+    color: #fff;
+}
+
+
+.logotype {
+    display: block;
+    height: 140px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+	.logotype img {
+    max-height: 100%;
+    height: auto;
+	}
+
+
+
+.menu-main-list{
+	float: left;
+
+	li{
+		display: block;
+		float: left;
+
+	}
+
+	a{
+		padding:10px 15px;
+		display: block;
+		text-decoration: none;
+
+		&:hover{
+
+		}
+	}
+
+	li.current-menu-item a,
+	li.current_page_ancestor a {
+
+	}
+
+}

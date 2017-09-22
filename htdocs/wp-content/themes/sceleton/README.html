@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+</head>
+<body>
+<h1 id="sceleton">sceleton</h1>
+
+<p>Vårt eget skelett tema som alla sajter som byggs från grunden ska utgå ifrån.</p>
+
+<h2 id="användning">Användning</h2>
+
+<h3 id="css">CSS</h3>
+
+<p>Vi använder <a href="http://sass-lang.com/">SASS</a> som CSS extension language.
+Det låter oss använda funktionalitet så som mixins, variabler, nesting etc. </p>
+
+<p>Majoriteten av all riktad CSS i ett projekt bör ske i <code>style.scss</code>
+Denna kompileras och minifieras automatiskt av Codekit till <code>style.css</code> och läses av hemsidan.
+Utöver <code>style.scss</code> har vi ett antal s.k. includes. Dessa är per default:
+* <code>_defaults.scss</code> – WordPress default styling för bilder, Clearfix samt accessibility relaterad CSS.
+* <code>_grid.scss</code> – Ett egetbyggt grid-system m.h.a mixins för att snabbt skapa kolumner. Kan med fördel tas bort om inget behov finns.
+* <code>_media-queries.scss</code> – Alla media queries för responsiva breakpoints.
+* <code>_print.scss</code> – Print-specifik styling. Kan med fördel tas bort om inget behov finns.
+* <code>_reset.scss</code> – Reset CSS från Eric Meyer samt Normalize för att ge inputs ett default utseende i alla webbläsare.
+* <code>_typography.scss</code> – Bas-styling för typografiska element som h1-h4 (h5 och h6 bör ej behövas i en hemsida), paragraf, länkar etc.
+* <code>_variables.scss</code> – Variabler för användning i övriga sass filer. Exempelvis färger och typsnitts-familjer.</p>
+
+<p>Vid användning av fler externa CSS filer som t.ex. <a href="http://www.woothemes.com/flexslider/">Flexslider</a> finns två alternativ. Antingen ändrar du dess filnamn till <code>_flexslider.scss</code> och inkluderar i botten av <code>style.scss</code> eller så lägger du <code>flexslider.css</code> i <code>/css/</code> mappen och inkluderar via <code>wp_enqueue_script()</code> i <code>functions.php</code>.
+Vår tumregel är att längre CSS filer bör inkluderas för sig i <code>functions.php</code> medan kortare CSS snippets kan inkluderas i <code>style.scss</code>.</p>
+
+<p>För kompilering används <a href="http://sass-lang.com/libsass">libsass</a> istället för den officiella Ruby kompilatorn. Libsass kräver inte Ruby och är snabbare. Om du stöter på problem med kompileringen som kan vara pga. detta kan libsass slås av i inställningarna för projektet i Codekit under <code>languages &gt; Sass</code> &#8220;Use the libsass compiler instead of the official Ruby compiler&#8221;.</p>
+
+<h2 id="inkluderat">Inkluderat</h2>
+
+<p>Dessa bör ses över minst var sjätte månad för att säkerställa att vi använder senaste versionen.</p>
+
+<h3 id="config">Config</h3>
+
+<p>I temat finns en färdig konfigurationsfil för CodeKit. Denna bör <em>inte</em> raderas eller ändras på något sätt då den är förinställd på de inställningar vi använder.
+Om du tycker att något där borde ändras så ska det först föreslås och läggas in som ett issue i repo.</p>
+
+<h3 id="inkluderadeexternacsskomponenter">Inkluderade externa CSS komponenter</h3>
+
+<ul>
+<li>CSS Reset: <a href="http://meyerweb.com/eric/tools/css/reset/"> http://meyerweb.com/eric/tools/css/reset/</a></li>
+<li>Normalize: <a href="https://necolas.github.io/normalize.css/">https://necolas.github.io/normalize.css/</a></li>
+</ul>
+
+<h3 id="inkluderadeexternajskomponenter">Inkluderade externa JS komponenter</h3>
+
+<ul>
+<li>Modernizr (inkl. html5shiv): <a href="https://modernizr.com/">https://modernizr.com/</a></li>
+<li>Picturefill: <a href="http://scottjehl.github.io/picturefill/">http://scottjehl.github.io/picturefill/</a></li>
+<li>Respond: <a href="https://github.com/scottjehl/Respond">https://github.com/scottjehl/Respond</a></li>
+<li>Selectivizr: <a href="http://selectivizr.com/">http://selectivizr.com/</a></li>
+</ul>
+
+<h3 id="Övrigt">Övrigt</h3>
+
+<p>Vi använder Composer för att hämta in dependencies/packages automatiskt från diverse ställen. Med Composer kan vi direkt hämta Sceleton här från repot vid uppsättning av en ny sajt så att nya sajter alltid har den senaste versionen. Vi hämtar även automatiskt in ACF Pro och WP Migrate DB Pro från deras egna packages. </p>
+
+<h2 id="problemvidareutveckling">Problem/vidareutveckling</h2>
+
+<p>Problem osv. kan diskuteras i Slack. Sådant som bör åtgärdas eller ändringar/tillägg som vi kommit överens om ska läggas in som tickets under &#8220;issues&#8221; i vårt Github repository.
+Då kan dessa tas om hand av vem som helst av oss genom att man först assignar den personen och sedan görs ändringar lokalt och pushas upp.</p>
+
+<p>I framtiden har vi även planer på att skapa mer specialiserade versioner av Sceleton för ännu snabbare uppstart av projekt där man redan vet vad man behöver. Detta kommer troligtvis ske i branches men är ännu i idé-stadiet. Med branches vore det i så fall så enkelt som att ändra en rad i composer.json innan man kör vagrant provision för att få ut just den version av temat man vill ha. </p>
+
+</body>
+</html>

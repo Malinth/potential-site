@@ -28,10 +28,11 @@
 	<div id="sidebar" class="sidebar">
 		<header id="masthead" class="site-header" role="banner">
 			<div class="site-branding">
-				<?php
-					twentyfifteen_the_custom_logo();
-
-					if ( is_front_page() && is_home() ) : ?>
+				
+				
+					<img src="<?php echo get_template_directory_uri(); ?>/images/logo.png"  class="logotype" alt="<?php echo get_option('blogname'); ?>" />
+					
+					<?php if ( is_front_page() && is_home() ) : ?>
 						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 					<?php else : ?>
 						<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
@@ -42,11 +43,23 @@
 						<p class="site-description"><?php echo $description; ?></p>
 					<?php endif;
 				?>
+
+
 				<button class="secondary-toggle"><?php _e( 'Menu and widgets', 'twentyfifteen' ); ?></button>
+
+
 			</div><!-- .site-branding -->
 		</header><!-- .site-header -->
 
 		<?php get_sidebar(); ?>
+		
+		 
+		<div class="divbutton"><p>menu</p>
+<button type="button" class="mbutton">gallery</button>
+<button type="button" class="mbutton">contact</button>
+</div>
+		
+		
 	</div><!-- .sidebar -->
 
 	<div id="content" class="site-content">

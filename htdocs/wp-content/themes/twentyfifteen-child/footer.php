@@ -15,27 +15,34 @@
 	<footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="site-info">
 	
+	<h1>Jquery tester</h1>
+			
+	<hr>
+	
 			<div class="result">
 	        <p>Ny class</p>
 			</div>
+	
+	<hr>
+		<p>Nav menu</p>
+						<nav class="nav">
+	
+                <button class="hamburger">Menu</button>
+                <ul class="nav">
+                    <li>
+                        <a href="/about" class="nav-item">About me</a>
+                    </li>
+                     <li>
+                        <a href="/archive" class="nav-item">Archive</a>
+                     </li>
+
+                </ul>
+            </nav>
+            <hr>
 			
-		
-			
- <input type="button" class="footerbutton" value="Footer menu">
- 
- <hr>
- 
-<button clas="menubtn">Click to fade in menu</button>
-<div="menu1" style= "display:none;">Menu1</div>
-<div="menu2" style= "display:none;">Menu2</div>
 
 
-<hr>
- 
-			<div class="result">
-	        <p>Ny class</p>
-			</div>
-			
+
 			</div>
 	</footer><!-- .site-footer -->
 

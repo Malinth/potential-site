@@ -12,6 +12,7 @@
 
 	</div><!-- .site-content -->
 
+
 	<footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="site-info">
 	
@@ -40,7 +41,10 @@
             </nav>
             <hr>
 			
-
+				<div class="divbutton"><p>menu</p>
+		<button type="button" class="mbutton">gallery</button>
+		<button type="button" class="mbutton">contact</button>
+		</div>
 
 
 			</div>

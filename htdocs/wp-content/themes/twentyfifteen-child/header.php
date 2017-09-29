@@ -25,10 +25,12 @@
 <div id="page" class="hfeed site">
 	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'twentyfifteen' ); ?></a>
 
+
 	<div id="sidebar" class="sidebar">
+			<div class="navbartoggle"><button>X</button></div>
 		<header id="masthead" class="site-header" role="banner">
 			<div class="site-branding">
-				
+			
 				
 					<img src="<?php echo get_template_directory_uri(); ?>/images/logo.png"  class="logotype" alt="<?php echo get_option('blogname'); ?>" />
 					
@@ -52,12 +54,6 @@
 		</header><!-- .site-header -->
 
 		<?php get_sidebar(); ?>
-		
-		 
-		<div class="divbutton"><p>menu</p>
-<button type="button" class="mbutton">gallery</button>
-<button type="button" class="mbutton">contact</button>
-</div>
 		
 		
 	</div><!-- .sidebar -->

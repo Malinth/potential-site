@@ -43,7 +43,7 @@
     }
   });*/
   
-  /*example 2*/
+  /*example */
   
 	  $('a').click(function(){
 	    $('html, body').animate({
@@ -53,21 +53,23 @@
 	});
 
 
-/* example 3*/
+	/* example 3 funkar inte eftersom jag inte har ngt som heter .top ??
+	
+	function smoothScrollingTo(target){
+	  $('html,body').animate({scrollTop:$(target).offset().‌​top}, 500);
+	}
+	$('a[href*=\\#]').on('click', function(event){     
+	    event.preventDefault();
+	    smoothScrollingTo(this.hash);
+	});
+	$(document).ready(function(){
+	  smoothScrollingTo(location.hash);
+	});
+	*/
 
-function smoothScrollingTo(target){
-  $('html,body').animate({scrollTop:$(target).offset().‌​top}, 500);
-}
-$('a[href*=\\#]').on('click', function(event){     
-    event.preventDefault();
-    smoothScrollingTo(this.hash);
-});
-$(document).ready(function(){
-  smoothScrollingTo(location.hash);
-});
 
 		
-		/* För att visa meny när man hovrar över "menu" och så visas menyn */
+		/* För att visa meny när man hovrar över "menu" och så visas menyn - dropdown meny*/
 
 	               $(document).on('mouseenter', '.divbutton', function () {
                     $(this).find(":button").show();
@@ -81,35 +83,38 @@ $(document).ready(function(){
                     $(this).find(":button").hide();
                 });
                 
-                       
-              
+        
+        
+        /* för att dölja eller visa sidebar menyn */
+        
+		$('.navbartoggle').on('click', function(){
+		    $('#sidebar').slideToggle('slide', { direction: 'left' }, 1000);
+		    $('#primary').animate({
+		        'margin-left' : $('#primary').css('margin-left') == '0px' ? '210px' : '10px'
+		    }, 1000);
+		});
 
-            var $hamburger = $('.home .hamburger'),
-                $nav = $('.home .nav'),
-                resizeTimer;
 
-            $hamburger.on('mouseenter', function() {
-               $nav.addClass('show');
-               $hamburger.addClass('hide');
-            });
 
-            $nav.on('mouseleave', function() {
-                $nav.removeClass('show');
-                $hamburger.removeClass('hide');
-            });
+		/* för att dölja eller visa sidebar menyn 2 
 
-            $(window).on('resize', function() {
-                clearTimeout(resizeTimer);
+	$(function(){
+	    $('.navbartoggle').on('click', function(){
+	        if( $('#sidebar').is(':visible') ) {
+	            $('#sidebar').animate({ 'width': '0px' }, 'slow', function(){
+	                $('#sidebar').hide();
+	            });
+	            $('#primary').animate({ 'margin-left': '0px' }, 'slow');
+	        }
+	        else {
+	            $('#sidebar').show();
+	            $('#sidebar').animate({ 'width': '210px' }, 'slow');
+	            $('#primary').animate({ 'margin-left': '210px' }, 'slow');
+	        }
+	    });
+	});
+	*/
 
-                resizeTimer = setTimeout(function() {
-                    $(".page-permalink #content").height() + 200 > $body.height() ? $body.removeClass("center-vert webkit-flex") : $body.addClass("center-vert webkit-flex")
 
-                    $nav.removeClass('show');
-                    $hamburger.removeClass('hide');
-                }, 250);
-            });
-
-            $("p").remove(":contains('Source:'),:contains('via ')");
-        });
         
                       })( jQuery );

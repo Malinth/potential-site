@@ -32,7 +32,7 @@
 		</div>
 	
 <div class="scroll">
-<a href="#intro" rel="" id="anchor1" class="anchorLink"><button class="hero_link" href="#intro">Scroll down</button></a>
+<a class="smoothScroll" href="#bottom"><button class="hero_link" href="#intro">Scroll down</button></a>
 </div>
 	
 	
@@ -62,7 +62,7 @@
 
 
 	<div id="intro">
-		
+			<a class="smoothScroll" href="#top" id="bottom">Click here to smooth scroll to the top of the page</a>		
 		<h1 class="galleryh1">Gallery</h1>
 		<?php 
 

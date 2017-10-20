@@ -29,21 +29,7 @@
 		
 		
 		/* pagescroll to entry 
-		
-	$('a.hero_link[href*="#"]:not([href="#"])').click(function() {
-    	if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-	      var target = $(this.hash);
-	      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-	      if (target.length) {
-	        $('html, body').animate({
-          scrollTop: (target.offset().top - 48)
-        }, 1000, "easeInOutExpo");
-        return false;
-      }
-    }
-  });*/
-  
-  /*example */
+		  
   
 	  $('a').click(function(){
 	    $('html, body').animate({
@@ -52,20 +38,25 @@
 	    return false;
 	});
 
+*/
 
-	/* example 3 funkar inte eftersom jag inte har ngt som heter .top ??
-	
-	function smoothScrollingTo(target){
-	  $('html,body').animate({scrollTop:$(target).offset().‌​top}, 500);
-	}
-	$('a[href*=\\#]').on('click', function(event){     
-	    event.preventDefault();
-	    smoothScrollingTo(this.hash);
-	});
-	$(document).ready(function(){
-	  smoothScrollingTo(location.hash);
-	});
-	*/
+$(function() {
+  // This will select everything with the class smoothScroll
+  // This should prevent problems with carousel, scrollspy, etc...
+  $('.smoothScroll').click(function() {
+    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+      if (target.length) {
+        $('html,body').animate({
+          scrollTop: target.offset().top
+        }, 1000); // The number here represents the speed of the scroll in milliseconds
+        return false;
+      }
+    }
+  });
+});
+
 
 
 		

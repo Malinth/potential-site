@@ -21,7 +21,7 @@
 	    max-width: 410px;
 	    position: fixed;
 	    width: 29.4118%;
-		background: #666;
+		background: #fff;
 	}
 }
 
@@ -89,7 +89,7 @@
 	
 		.hero_link {
 	    position: absolute;
-	    top: 15%;
+	    top: 7%;
 	    left: 50%;
 	    right: 50%;
 	    transform: translate(-50%, -50%);

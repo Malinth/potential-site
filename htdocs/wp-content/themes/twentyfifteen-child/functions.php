@@ -26,7 +26,16 @@ wp_enqueue_script('child_theme_script_handle', get_stylesheet_directory_uri().'/
 add_action( 'wp_enqueue_scripts', 'my_scripts_method' );
 
 
+/*
+ * Add reference to Malin in the admin footer
+ */
+function custom_admin_footer() {
+	echo '<a href="http://potential-site.dev/">' . __( 'Webbplats byggd av Malin Thunberg - Potential-Site', 'translate' ) . '</a>';
+}
+add_filter( 'admin_footer_text', 'custom_admin_footer' );
 
+
+add_filter('pre_option_link_manager_enabled', '__return_true');
 
 ?>
 

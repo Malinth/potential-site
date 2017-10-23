@@ -33,6 +33,10 @@
 }
 
 
+a{
+	border-bottom: none !important;
+}
+
 #primary {
 	position: relative;
 }

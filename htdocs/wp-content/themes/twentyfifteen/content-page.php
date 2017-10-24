@@ -19,6 +19,7 @@
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
+		<?php return display_carousel(); ?> 
 		<?php the_content(); ?>
 		<?php
 			wp_link_pages( array(

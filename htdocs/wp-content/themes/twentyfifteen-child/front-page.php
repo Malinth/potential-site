@@ -45,7 +45,7 @@
 	-->
 	
 	<div class="entry-content">
-		<?php the_content(); ?>
+	
 		<?php
 			wp_link_pages( array(
 				'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'twentyfifteen' ) . '</span>',
@@ -60,9 +60,8 @@
 
 
 	<div id="intro">
-			<a class="smoothScroll" href="#top" id="bottom">Click here to smooth scroll to the top of the page</a>		
-	
-<?php return display_carousel(); ?> 
+			<?php the_content(); ?>
+			<a class="smoothScroll" href="#top" id="bottom">Go to top</a>		
 	
 		<h1 class="galleryh1">Gallery</h1>
 		<?php 
@@ -92,4 +91,3 @@
 
 </article><!-- #post-## -->
 
-<?php get_footer();?>

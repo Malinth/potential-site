@@ -2,8 +2,8 @@
 
 
 #carousel {
-    width: 900px;
-    height: 550px;
+    width: 700px;
+    height: 450px;
 }
 
 #carousel ul,
@@ -20,7 +20,7 @@
 
 #carousel ul li {
     float: left;
-    width: 900px;
+    width: 700px;
 	background-position: center center;
 }
 

@@ -33,8 +33,12 @@ class Potential_Image_Plugin_Admin {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'assets/js/potential-image-plugin-admin.js', null, $this->plugin_version, true );
+				wp_enqueue_script( $this->plugin_name, plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'assets/js/carousel.js', null, $this->plugin_version, true );
+		
 
 	}
+	
+	
 
 }
 new Potential_Image_Plugin_Admin( $plugin_name, $plugin_version );

@@ -124,6 +124,8 @@ class Potential_Image_Plugin {
 
 }
 
+
+		/* Metabox for URL shows here */
 		/* Fire our meta box setup function on the post editor screen. */
 		add_action( 'load-post.php', 'smashing_post_meta_boxes_setup' );
 		add_action( 'load-post-new.php', 'smashing_post_meta_boxes_setup' );
@@ -144,7 +146,7 @@ class Potential_Image_Plugin {
 		  add_meta_box(
 		    'my_carousel_url',      // Unique ID
 		    esc_html__( 'Image URL', 'carousel' ),    // Title
-		    'smashing_post_class_meta_box',   // Callback function
+		    'carousel_url_meta_box',   // Callback function
 		    'my_carousel',         // Admin page (or post type)
 		    'side',         // Context
 		    'default'         // Priority
@@ -152,15 +154,18 @@ class Potential_Image_Plugin {
 		}
 		
 		/* Display the post meta box. */
-		function smashing_post_class_meta_box( $post ) { ?>
+		function carousel_url_meta_box( $post ) { ?>
 		
-		  <?php wp_nonce_field( basename( __FILE__ ), 'smashing_post_class_nonce' ); ?>
+		  <?php wp_nonce_field( basename( __FILE__ ), 'carousel_url_nonce' ); ?>
 		
 		  <p>
 		    <label for="my_carousel_url"><?php _e( "Add an image URL:", 'carousel' ); ?></label>
 		    <br />
-		    <input class="widefat" type="url" name="my_carousel_url" id="my_carousel_url" value="<?php echo esc_attr( get_post_meta( $post->ID, 'smashing_post_class', true ) ); ?>" size="30" />
+		    <input class="carouselurl" type="url" name="my_carousel_url" id="my_carousel_url" value="<?php echo esc_attr( get_post_meta( $post->ID, 'carousel_url', true ) ); ?>" size="30" />
 		  </p>
+		  
+		  
+		  
 		<?php }
 			
 			
@@ -168,7 +173,7 @@ class Potential_Image_Plugin {
 		function smashing_save_post_class_meta( $post_id, $post ) {
 		
 		  /* Verify the nonce before proceeding. */
-		  if ( !isset( $_POST['smashing_post_class_nonce'] ) || !wp_verify_nonce( $_POST['smashing_post_class_nonce'], basename( __FILE__ ) ) )
+		  if ( !isset( $_POST['carousel_url_nonce'] ) || !wp_verify_nonce( $_POST['carousel_url_nonce'], basename( __FILE__ ) ) )
 		    return $post_id;
 		
 		  /* Get the post type object. */
@@ -179,10 +184,10 @@ class Potential_Image_Plugin {
 		    return $post_id;
 		
 		  /* Get the posted data and sanitize it for use as an HTML class. */
-		  $new_meta_value = ( isset( $_POST['smashing-post-class'] ) ? sanitize_html_class( $_POST['smashing-post-class'] ) : '' );
+		  $new_meta_value = ( isset( $_POST['carousel-url'] ) ? sanitize_html_class( $_POST['carousel-url'] ) : '' );
 		
 		  /* Get the meta key. */
-		  $meta_key = 'smashing_post_class';
+		  $meta_key = 'carousel_url';
 		
 		  /* Get the meta value of the custom field key. */
 		  $meta_value = get_post_meta( $post_id, $meta_key, true );
@@ -202,9 +207,9 @@ class Potential_Image_Plugin {
 			
 			
 		/* Filter the post class hook with our custom post class function. */
-		add_filter( 'post_class', 'smashing_post_class' );
+		add_filter( 'post_class', 'carousel_url' );
 		
-		function smashing_post_class( $classes ) {
+		function carousel_url( $classes ) {
 		
 		  /* Get the current post ID. */
 		  $post_id = get_the_ID();
@@ -213,7 +218,7 @@ class Potential_Image_Plugin {
 		  if ( !empty( $post_id ) ) {
 		
 		    /* Get the custom post class. */
-		    $post_class = get_post_meta( $post_id, 'smashing_post_class', true );
+		    $post_class = get_post_meta( $post_id, 'carousel_url', true );
 		
 		    /* If a post class was input, sanitize it and add it to the post class array. */
 		    if ( !empty( $post_class ) )

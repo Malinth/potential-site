@@ -5,17 +5,24 @@
 
 <header class="header">
 	
-<h1 class="entry-title"><?php the_title(); ?></h1> <?php edit_post_link(); ?>
+<h1 class="entry-title"><?php the_title(); ?></h1>
 </header>
 
 
 	<section class="entry-content">
 	<?php if ( has_post_thumbnail() ) { the_post_thumbnail(); } ?>
+	<div class="carouselwrapper">
+	<?php display_carousel() ?>
+	</div>
+	<div class="wrapper">
 	<?php the_content(); ?>
+	</div>
 	<div class="entry-links"><?php wp_link_pages(); ?></div>
 	</section>
-
-		<div class="hero_img">
+	
+		
+<!-- 		<div class="hero_img"> -->
+<!--
 		<?php 
 	
 			$image = get_field('hero_image');
@@ -25,19 +32,24 @@
 				<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" />
 			
 			<?php endif; ?>
+-->
+<!--
 		</div>
 		
 		<div class="hero_text">
 			<?php  the_field("hero_text");  ?>
 		</div>
+-->
 	
+<!--
 <div class="scroll">
 <a href="#intro" rel="" id="anchor1" class="anchorLink"><button class="hero_link" href="#intro">Scroll down</button></a>
 </div>
+-->
 	
 </article>
 <?php if ( ! post_password_required() ) comments_template( '', true ); ?>
 <?php endwhile; endif; ?>
 </section>
-<?php get_sidebar(); ?>
+<!-- <?php get_sidebar(); ?> -->
 <?php get_footer(); ?>

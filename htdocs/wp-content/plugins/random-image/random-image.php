@@ -14,115 +14,243 @@
  * @since	1.0
  */
 
- // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
-
-class Random_Image {
-
-	protected $plugin_name;
-	protected $plugin_version;
 
 
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since	1.0
-	 */
-	public function __construct(){
+/*
+	
+	NEW CODE HERE 
+*/
 
-		$this->plugin_name = 'random-image';
-		$this->plugin_version = '1.0';
 
-		// Load all dependency files.
-		$this->load_dependencies();
-
-		// Activation hook
-		register_activation_hook( __FILE__, array( $this, 'activate' ) );
-
-		// Deactivation hook
-		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
-
-		// Localization
-		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-
-	}
+if ( ! class_exists( 'Random_Image' ) ) {
 
 	/**
-	 * Loads all dependencies in our plugin.
-	 *
-	 * @since	1.0
+	 * Class Random_Image
 	 */
-	public function load_dependencies() {
+	class Random_Image{
 
-		// Admin specific includes
-		if ( is_admin() ) {
-			$this->include_file( 'admin/class-random-image-admin.php' );
+		const SHORTCODE = 'random_image';
+
+		/**
+		 * Initialize the plugin.
+		 */
+		public static function initialize() {
+			load_plugin_textdomain( 'random-image', false, dirname( __FILE__ ) . '/languages' );
+			add_filter( 'widget_text', 'do_shortcode' );
+			add_action( 'wp_enqueue_scripts', array( __CLASS__, 'wp_enqueue_scripts' ) );
+			add_shortcode( self::SHORTCODE, array( __CLASS__, 'shortcode' ) );
 		}
 
-		$this->include_file( 'class-random-image-init.php' );
-		$this->include_file( 'public/class-random-image-public.php' );
-
-	}
-
-
-	/**
-	 * Includes a single file located inside /includes
-	 *
-	 * @param	string $path relative path to /includes
-	 * @since	1.0
-	 */
-	private function include_file( $path ) {
-		$plugin_name = $this->plugin_name;
-		$plugin_version = $this->plugin_version;
-
-		$includes_dir = trailingslashit( plugin_dir_path( __FILE__ ) . 'includes' );
-		if ( file_exists( $includes_dir . $path ) ) {
-			include_once( $includes_dir . $path );
-		} else {
-			error_log( sprintf( 'Incorrect path %1$s supplied for include_once in %2$s. Full path to file that does not exist: %3$s', $path, $this->plugin_name, $includes_dir . $path ) );
+		public static function wp_enqueue_scripts() {
+			wp_register_style( self::SHORTCODE, plugins_url( '/assets/css/style.css', __FILE__ ) );
 		}
+
+		/**
+		 * Shortcode handler
+		 *
+		 * @param array $atts
+		 *
+		 * @return bool|string
+		 */
+		public static function shortcode( $atts ) {
+
+			$output = '';
+
+			$atts = shortcode_atts(
+				array(
+					'attachment'     => '', // Alias of 'attachment_ids'
+					'attachments'    => '', // Alias of 'attachment_ids'
+					'attachment_ids' => '',
+					'caption'        => 'false',
+					'class'          => '',
+					'exclude'        => '',
+					'not'            => '', // Alias of 'exclude'
+					'post_id'        => get_the_ID(),
+					'size'           => 'full',
+				),
+				$atts,
+				self::SHORTCODE
+			);
+
+			// Allow 'attachment' to be an alias for 'attachment_ids'
+			if ( ! empty( $atts['attachment'] ) ) {
+				$atts['attachment_ids'] = $atts['attachment'];
+			}
+			unset( $atts['attachment'] );
+
+			// Allow 'attachments' to be an alias for 'attachment_ids'
+			if ( ! empty( $atts['attachments'] ) ) {
+				$atts['attachment_ids'] = $atts['attachments'];
+			}
+			unset( $atts['attachments'] );
+
+			// Allow 'not' to be an alias for 'exclude'
+			if ( ! empty( $atts['not'] ) ) {
+				$atts['exclude'] = $atts['not'];
+			}
+			unset( $atts['not'] );
+
+			// Enforce proper data types for all attributes (that aren't strings)
+			$atts['post_id'] = absint( $atts['post_id'] );
+			$atts['exclude'] = self::parse_id_list( $atts['exclude'] );
+			$atts['attachment_ids'] = self::parse_id_list( $atts['attachment_ids'] );
+			$atts['caption'] = filter_var( $atts['caption'], FILTER_VALIDATE_BOOLEAN );
+
+			$post = get_post( $atts['post_id'] );
+
+			if ( $atts['post_id'] && ! $post ) {
+
+				// If the user can edit this post, let them know they provided an invalid post ID
+				if ( current_user_can( 'edit_post', get_the_ID() ) ) {
+					$output = self::error(
+						sprintf( __( 'Sorry, post ID "%d" is invalid. Please check your shortcode implementation.', 'potential-site' ), $atts['post_id'] ),
+						'[' . self::SHORTCODE . ' post_id="' . $atts['post_id'] . '"]'
+					);
+				}
+
+				return $output;
+			}
+
+			// If there are no requested attachment IDs, fetch attached images from the post
+			if ( empty( $atts['attachment_ids'] ) ) {
+				$atts['attachment_ids'] = array_map( 'absint', wp_list_pluck( get_attached_media( 'image', $post ), 'ID' ) );
+			}
+
+			// Remove excluded attachment IDs
+			$atts['attachment_ids'] = array_diff( $atts['attachment_ids'], $atts['exclude'] );
+
+			// Check if we have any attachment IDs
+			if ( empty( $atts['attachment_ids'] ) ) {
+
+				// If the user can edit this post, let them know they forgot to attach an image to the post or have excluded all available attachment IDs
+				if ( current_user_can( 'edit_post', get_the_ID() ) ) {
+					$output = self::error(
+						__( 'Sorry, it looks like you forgot to attach an image to the post or have excluded all possible attachment IDs.', 'potential-site' ),
+						sprintf( __( 'Please check your %s shortcode implementation.', 'potential-site' ), '[' . self::SHORTCODE . ']' )
+					);
+				}
+
+				return $output;
+			}
+
+			// Select a random attachment ID
+			$attachment_id = $atts['attachment_ids'][ array_rand( $atts['attachment_ids'] ) ];
+
+			/**
+			 * Filter the attachment ID selected for display.
+			 *
+			 * @param int $attachment_id The attachment ID
+			 * @param array $atts Parsed shortcode attributes
+			 */
+			$attachment_id = apply_filters( self::SHORTCODE . '-attachment_id', $attachment_id, $atts );
+
+			if ( ! wp_attachment_is_image( $attachment_id ) ) {
+
+				// If the user can edit this post, let them know they provided an invalid image ID
+				if ( current_user_can( 'edit_post', get_the_ID() ) ) {
+					$output = self::error(
+						sprintf( __( 'Sorry, attachment ID "%d" is invalid. Please check your shortcode implementation.', 'potential-site' ), $attachment_id ),
+						'[' . self::SHORTCODE . ' attachment="' . join( ',', $atts['attachment_ids'] ) . '"]'
+					);
+				}
+
+				return $output;
+			}
+
+			$attachment = get_post( $attachment_id );
+
+			$image_atts = empty( $atts['class'] ) ? array() : array( 'class' => $atts['class'] );
+
+			/**
+			 * Filter the image attributes.
+			 *
+			 * @param array $image_atts The attributes for the image.
+			 * @param WP_Post $attachment The attachment post object.
+			 * @param array $atts Parsed shortcode attributes.
+			 */
+			$image_atts = apply_filters( self::SHORTCODE . '-image_atts', $image_atts, $attachment, $atts );
+
+			// Check if we have a valid image size
+			$image_sizes = get_intermediate_image_sizes();
+			$image_sizes[] = 'full'; // Allow a full size image to be used.
+			if ( ! in_array( $atts['size'], $image_sizes ) ) {
+
+				// If the user can edit this post, let them know they provided an invalid image size
+				if ( current_user_can( 'edit_post', get_the_ID() ) ) {
+					$output = self::error(
+						sprintf( __( 'Sorry, image size "%s" is invalid. Defaulting to "%s" image size. Please check your shortcode implementation.', 'potential-site' ), $atts['size'], 'large' ),
+						'[' . self::SHORTCODE . ' size="' . $atts['size'] . '"]'
+					);
+				}
+
+				// Ensure that we have a valid image size
+				$atts['size'] = 'large';
+			}
+
+			// Setup markup
+			$markup = '<figure>%1$s</figure>';
+			if ( $atts['caption'] ) {
+				$markup = '<figure>%1$s<figcaption>%2$s</figcaption></figure>';
+			}
+
+			/**
+			 * Filter the markup surrounding the image.
+			 *
+			 * @param string $markup The sprintf formatted string.
+			 * @param WP_Post $attachment The attachment post object.
+			 * @param array $atts Parsed shortcode attributes.
+			 */
+			$markup = apply_filters( self::SHORTCODE . '-markup', $markup, $attachment, $atts );
+
+			$output .= sprintf(
+				$markup,
+				wp_get_attachment_image( $attachment->ID, $atts['size'], false, $image_atts ),
+				get_the_excerpt( $attachment->ID )
+			);
+
+			return $output;
+		}
+
+		/**
+		 * Parse an ID list into an array.
+		 *
+		 * @param string $list
+		 *
+		 * @return int[]
+		 */
+		public static function parse_id_list( $list ) {
+			$ids = array();
+			if ( ! empty( $list ) ) {
+				$ids = array_filter( array_map( 'absint', explode( ',', preg_replace( '#[^0-9,]#', '', $list ) ) ) );
+			}
+
+			return $ids;
+		}
+
+		/**
+		 * Setup error message.
+		 *
+		 * @param string $message
+		 *
+		 * @return string
+		 */
+		public static function error( $message, $example ) {
+
+			wp_enqueue_style( self::SHORTCODE );
+
+			return sprintf(
+				'<div class="potential-site-error"><p>%s</p><p>%s</p><p>%s</p></div>',
+				esc_html( $message ),
+				esc_html( $example ),
+				esc_html( 'Note: This helpful notification is only visible to logged in users who can edit this shortcode.' )
+				);
+		}
+
 	}
 
+	Random_Image::initialize();
 
-	/**
-	 * The code that runs during plugin activation.
-	 *
-	 * @since    1.0
-	 */
-	public function activate() {
-
-	}
-
-
-	/**
-	 * The code that runs during plugin deactivation.
-	 *
-	 * @since    1.0
-	 */
-	public function deactivate() {
-
-	}
-
-
-	/**
-	 * Load the plugin text domain for translation.
-	 *
-	 * @since    1.0
-	 */
-	public function load_textdomain() {
-
-		load_plugin_textdomain(
-			'random-image',
-			false,
-			basename( dirname( __FILE__ ) ) . '/languages/'
-		);
-
-	}
-
-}
-
+};
 
 /**
  * Begins execution of the plugin.

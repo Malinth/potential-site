@@ -1,0 +1,21 @@
+	.random-image-error {
+	    border: 1px solid red;
+	    color: red;
+	    padding: 1rem;
+	    margin: 1rem 0;
+	}
+	
+	.random-image-error p:last-of-type {
+	    margin-bottom: 0;
+	    padding-bottom: 0;
+	}
+	
+	
+	.figure {
+	width: 100%;
+	height: 100%;
+	img {
+		width: 100%;
+		height: 100%;
+	}
+	}

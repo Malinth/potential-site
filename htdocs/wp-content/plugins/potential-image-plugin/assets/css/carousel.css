@@ -54,6 +54,7 @@
     font-weight: bold;
     font-size: 45px;
     color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
 }
 
 #carousel ul li a.carousel-prev {

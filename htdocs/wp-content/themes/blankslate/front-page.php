@@ -14,6 +14,7 @@
 	<div class="carouselwrapper">
 	<?php display_carousel() ?>
 	</div>
+
 	<div class="wrapper">
 	<?php the_content(); ?>
 	</div>

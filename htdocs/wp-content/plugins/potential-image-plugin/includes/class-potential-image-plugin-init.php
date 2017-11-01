@@ -20,7 +20,7 @@ class Potential_Image_Plugin_Init {
 		// Example action hook usage. Uncomment or delete.
 		//sadd_action( 'init', array( $this, 'init' ) );
 		
-		add_action( 'init', array( $this, 'my_carousel' ) );
+		add_action( 'init', array( $this, 'carousel' ) );
 	}
 
 
@@ -46,11 +46,11 @@ class Potential_Image_Plugin_Init {
 
 	 
 	 // Register Custom Post Type
-	 public function my_carousel() {
+	 public function carousel() {
 
 
         $labels = array(
-        'name'                  => _x( 'Carousels', 'Post Type General Name', 'potential-image-plugin' ),
+        'name'                  => _x( 'Carousel', 'Post Type General Name', 'potential-image-plugin' ),
 		'singular_name'         => _x( 'Carousel', 'Post Type Singular Name', 'potential-image-plugin' ),
 		'menu_name'             => __( 'Carousel', 'potential-image-plugin' ),
 		'name_admin_bar'        => __( 'Post Type', 'potential-image-plugin' ),
@@ -100,7 +100,7 @@ class Potential_Image_Plugin_Init {
         'publicly_queryable'    => true,
         'capability_type'       => 'post',
         );
-        register_post_type( 'my_carousel', $args );
+        register_post_type( 'carousel', $args );
         
         }
 

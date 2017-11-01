@@ -66,8 +66,69 @@ return $count;
 }
 }
 
+/* -----------------NEW MENY------------------- */
+
 function register_my_menu() {
   register_nav_menu('social-menu',__( 'Social Menu' ));
 }
 add_action( 'init', 'register_my_menu' );
+
+
+/* --------------FILTRERA I ADMIN VIEW , AUTHOR on POSTS --------------*/
+
+//defining the filter that will be used to select posts by 'post formats'
+function add_post_formats_filter_to_post_administration(){
+
+    //execute only on the 'post' content type
+    global $post_type;
+    if($post_type == 'post'){
+
+        $post_formats_args = array(
+            'show_option_all'   => 'All Post formats',
+            'orderby'           => 'NAME',
+            'order'             => 'ASC',
+            'name'              => 'post_format_admin_filter',
+            'taxonomy'          => 'post_format'
+        );
+
+        //if we have a post format already selected, ensure that its value is set to be selected
+        if(isset($_GET['post_format_admin_filter'])){
+            $post_formats_args['selected'] = sanitize_text_field($_GET['post_format_admin_filter']);
+        }
+
+        wp_dropdown_categories($post_formats_args);
+
+    }
+}
+add_action('restrict_manage_posts','add_post_formats_filter_to_post_administration');
+
+//defining the filter that will be used so we can select posts by 'author'
+function add_author_filter_to_posts_administration(){
+
+    //execute only on the 'post' content type
+    global $post_type;
+    if($post_type == 'post'){
+
+        //get a listing of all users that are 'author' or above
+        $user_args = array(
+            'show_option_all'   => 'All Users',
+            'orderby'           => 'display_name',
+            'order'             => 'ASC',
+            'name'              => 'aurthor_admin_filter',
+            'who'               => 'authors',
+            'include_selected'  => true
+        );
+
+        //determine if we have selected a user to be filtered by already
+        if(isset($_GET['aurthor_admin_filter'])){
+            //set the selected value to the value of the author
+            $user_args['selected'] = (int)sanitize_text_field($_GET['aurthor_admin_filter']);
+        }
+
+        //display the users as a drop down
+        wp_dropdown_users($user_args);
+    }
+
+}
+add_action('restrict_manage_posts','add_author_filter_to_posts_administration');
 

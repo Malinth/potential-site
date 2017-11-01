@@ -144,10 +144,10 @@ class Potential_Image_Plugin {
 		function smashing_add_post_meta_boxes() {
 		
 		  add_meta_box(
-		    'my_carousel_url',      // Unique ID
+		    'carousel_url',      // Unique ID
 		    esc_html__( 'Image URL', 'carousel' ),    // Title
 		    'carousel_url_meta_box',   // Callback function
-		    'my_carousel',         // Admin page (or post type)
+		    'carousel',         // Admin page (or post type)
 		    'side',         // Context
 		    'default'         // Priority
 		  );
@@ -204,6 +204,13 @@ class Potential_Image_Plugin {
 		  elseif ( '' == $new_meta_value && $meta_value )
 		    delete_post_meta( $post_id, $meta_key, $meta_value );
 		}
+			
+
+add_action( 'save_post', 'smashing_save_post_class_meta', 10, 3 );
+
+
+			
+			
 			
 			
 		/* Filter the post class hook with our custom post class function. */

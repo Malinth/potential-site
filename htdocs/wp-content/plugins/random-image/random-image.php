@@ -62,7 +62,7 @@ if ( ! class_exists( 'Random_Image' ) ) {
 					'attachments'    => '', // Alias of 'attachment_ids'
 					'attachment_ids' => '',
 					'caption'        => 'false',
-					'class'          => '',
+					'class'          => 'randomimg',
 					'exclude'        => '',
 					'not'            => '', // Alias of 'exclude'
 					'post_id'        => get_the_ID(),

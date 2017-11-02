@@ -132,3 +132,29 @@ function add_author_filter_to_posts_administration(){
 }
 add_action('restrict_manage_posts','add_author_filter_to_posts_administration');
 
+
+
+// Define the style_formats array
+ 
+    $style_formats = array(  
+
+        array(  
+            'title' => 'Button black bg',  
+            'block' => 'span',  
+            'classes' => 'btn black',
+            'wrapper' => true,
+        ),
+          array(  
+            'title' => 'Button white bg',  
+            'block' => 'span',  
+            'classes' => 'btn white',
+            'wrapper' => true,
+        )
+    );  
+    // Insert the array, JSON ENCODED, into 'style_formats'
+    $init_array['style_formats'] = json_encode( $style_formats );  
+     
+    return $init_array;  
+   
+
+

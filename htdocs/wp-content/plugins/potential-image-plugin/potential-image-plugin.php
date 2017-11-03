@@ -161,7 +161,7 @@ class Potential_Image_Plugin {
 		  <p>
 		    <label for="my_carousel_url"><?php _e( "Add an image URL:", 'carousel' ); ?></label>
 		    <br />
-		    <input class="carouselurl" type="url" name="my_carousel_url" id="my_carousel_url" value="<?php echo esc_attr( get_post_meta( $post->ID, 'carousel_url', true ) ); ?>" size="30" />
+		    <input class="carouselurl" type="url" name="my_carousel_url" id="my_carousel_url" value="<?php echo esc_attr( get_post_meta( $post->ID, 'my_carousel_url', true ) ); ?>" maxlength="200" />
 		  </p>
 		  
 		  
@@ -184,10 +184,13 @@ class Potential_Image_Plugin {
 		    return $post_id;
 		
 		  /* Get the posted data and sanitize it for use as an HTML class. */
-		  $new_meta_value = ( isset( $_POST['carousel-url'] ) ? sanitize_html_class( $_POST['carousel-url'] ) : '' );
-		
+		  $new_meta_value = ( isset( $_POST['carousel_url_nonce'] ) ? sanitize_html_class( $_POST['carousel_url_nonce'] ) : '' );
+
+		  error_log($_POST['my_carousel_url']);
+
+
 		  /* Get the meta key. */
-		  $meta_key = 'carousel_url';
+		  $meta_key = 'my_carousel_url';
 		
 		  /* Get the meta value of the custom field key. */
 		  $meta_value = get_post_meta( $post_id, $meta_key, true );
@@ -210,11 +213,8 @@ add_action( 'save_post', 'smashing_save_post_class_meta', 10, 3 );
 
 
 			
-			
-			
-			
 		/* Filter the post class hook with our custom post class function. */
-		add_filter( 'post_class', 'carousel_url' );
+		add_filter( 'post_class', 'my_carousel_url' );
 		
 		function carousel_url( $classes ) {
 		
@@ -225,7 +225,7 @@ add_action( 'save_post', 'smashing_save_post_class_meta', 10, 3 );
 		  if ( !empty( $post_id ) ) {
 		
 		    /* Get the custom post class. */
-		    $post_class = get_post_meta( $post_id, 'carousel_url', true );
+		    $post_class = get_post_meta( $post_id, 'my_carousel_url', true );
 		
 		    /* If a post class was input, sanitize it and add it to the post class array. */
 		    if ( !empty( $post_class ) )
@@ -234,6 +234,8 @@ add_action( 'save_post', 'smashing_save_post_class_meta', 10, 3 );
 		
 		  return $classes;
 		}
+		
+		
 	
 	/**
 		*

@@ -22,6 +22,8 @@ class Potential_Sajt_Admin {
 
 		// Example action hook usage. Uncomment or delete.
 		//add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		
+		add_action( 'restrict_manage_posts', array( $this, 'admin_posts_filter_restrict_manage_posts' ) );
 
 	}
 
@@ -40,20 +42,26 @@ public function admin_posts_filter_restrict_manage_posts() {
     }
     
     
+    
+    
+    
+    
+    
+    
    /* Kolla så att det är rätt custom-post-type */
     if ( 'carousel' == $type ) {
         
         
        		 /**
-             * Filter by "tag" status or what you want to filter by 
+             * Filter by "tag" status..
              */
              
             echo '<select name="carousel">';
-            echo '<option value="">' . __( 'Carousel', 'carousel_tag' ) . '</option>';
+            echo '<option value="">' . __( 'Carousel', 'potential-sajt' ) . '</option>';
             $current_status = isset( $_GET['carousel'] ) && '' != $_GET['carousel'] ? $_GET['carousel'] : -1;
             $statuses = array(
-                  0 => __( 'No found', 'carousel_tag' ),
-                  1 => __( 'Tag', 'carousel_tag' ),
+                  0 => __( 'No found', 'potential-sajt' ),
+                  1 => __( 'Tag', 'potential-sajt' ),
             );
             foreach ( $statuses as $value => $label ) {
                 printf(
@@ -85,7 +93,7 @@ public function admin_posts_filter_restrict_manage_posts() {
     $query->query_vars['orderby'] = 'name';
     
     /**
-     * Filter by suspensions
+     * Filter by tag
      */
     if ( isset( $_GET['carousel'] ) && '' != $_GET['carousel'] && -1 != $_GET['carousel'] ) {
     

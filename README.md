@@ -1,2 +1,2 @@
 # potential-site
-a potential jquery site
+A potential wordpress site by Malin thunberg
